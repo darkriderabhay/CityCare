@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CityCare</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html"><h2 class="name">🏙️ City<span>Care</span></h2></a>
+            </div>
+
+            <!-- Hamburger Button -->
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="admin-dashboard.html" class="active">All Complaints</a></li>
+                <li><a href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <div class="dashboard">
+        <div class="container">
+         <!-- Welcome Header with Filters -->
+            <div class="dashboard-header">
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start;">
+                    <!-- Left: Header Text -->
+                    <div>
+                        <h1 style="margin: 0 0 10px 0;">Admin Dashboard</h1>
+                        <p style="margin: 0;">Manage all civic complaints</p>
+                    </div>
+
+                    <!-- Right: Filters -->
+                    <div>
+                        <h3 style="margin: 0 0 15px 0; font-size: 1.1rem;">Filter Complaints</h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                            <div>
+                                <select id="filterStatus" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.9); font-size: 0.85rem;">
+                                    <option value="">All Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="assigned">Assigned</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="rejected">Rejected</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select id="filterDepartment" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.9); font-size: 0.85rem;">
+                                    <option value="">All Departments</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select id="filterPriority" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.9); font-size: 0.85rem;">
+                                    <option value="">All Priorities</option>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <input type="text" id="searchText" placeholder="Search by ID or Title" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.9); font-size: 0.85rem;">
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <button onclick="applyFilters()" style="flex: 1; padding: 8px; background:lightblue; color: black; border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">Apply</button>
+                                <button onclick="resetFilters()" style="flex: 1; padding: 8px; background: lightcoral; color: black; border: 1px solid #ddd; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="totalComplaints">0</h3>
+                    <p>Total Complaints</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="pendingComplaints">0</h3>
+                    <p>Pending</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="inProgressComplaints">0</h3>
+                    <p>In Progress</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="resolvedComplaints">0</h3>
+                    <p>Resolved</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 300px)); justify-content: space-evenly; margin-bottom: 2rem;">
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3>Complaints by Status</h3>
+                    <canvas id="statusChart"></canvas>
+                </div>
+                <div style="background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3>Complaints by Department</h3>
+                    <canvas id="departmentChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Complaints Table -->
+            <div class="table-container">
+                <h2>All Complaints</h2>
+                <div id="complaintsTableContainer">
+                    <p>Loading complaints...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Updating Complaint -->
+    <div id="updateModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+        <div style="background:white; max-width:500px; margin:100px auto; padding:30px; border-radius:10px;">
+            <h2>Update Complaint Status</h2>
+            <div id="modalComplaintInfo"></div>
+            
+            <div class="form-group">
+                <label for="modalStatus">Status</label>
+                <select id="modalStatus">
+                    <option value="pending">Pending</option>
+                    <option value="assigned">Assigned</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="modalDepartment">Assign Department</label>
+                <select id="modalDepartment">
+                    <option value="">Select Department</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="modalRemarks">Remarks</label>
+                <textarea id="modalRemarks" placeholder="Add remarks (optional)"></textarea>
+            </div>
+
+            <button class="btn btn-primary" onclick="updateComplaint()">Update</button>
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 CityCare - Online Civic Issue Reporting System</p>
+        </div>
+    </footer>
+<!-- Chatbot Widget -->
+    <div class="chatbot-button" id="chatbotButton">
+        <span>💬</span>
+    </div>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>🤖 CityCare Assistant</h3>
+            <button class="chatbot-close" id="chatbotClose">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">
+                    Hi! I'm CityCare Assistant. How can I help you today?
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="chatbotSend">Send</button>
+        </div>
+    </div>
+    <script src="js/navbar.js"></script>
+    <script src="js/chatbot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CityCare</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+   
+    <!-- Login Form -->
+    <div class="form-container">
+        <a href="index.html"><h2 class="name">🏙️ City<span>Care</span></h2></a>
+        <div><h3>Welcome Back!!</h3></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Login</button>
+        </form>
+
+        <div class="form-text">
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 CityCare - Online Civic Issue Reporting System</p>
+        </div>
+    </footer>
+<!-- Chatbot Widget -->
+    <div class="chatbot-button" id="chatbotButton">
+        <span>💬</span>
+    </div>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>🤖 CityCare Assistant</h3>
+            <button class="chatbot-close" id="chatbotClose">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">
+                    Hi! I'm CityCare Assistant. How can I help you today?
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="chatbotSend">Send</button>
+        </div>
+    </div>
+
+    <script src="js/chatbot.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

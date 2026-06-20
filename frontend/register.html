@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CityCare</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Registration Form -->
+    <div class="form-container">
+        <a href="index.html"><h2 class="name">🏙️ City<span>Care</span></h2></a>
+        <div><h3>Sign up to report an Issue!!</h3></div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="full_name">Full Name *</label>
+                <input type="text" placeholder="Enter your Full Name" id="full_name" name="full_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" placeholder="Enter your Email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password"  placeholder="Enter your Password" id="password" name="password" required minlength="6">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone"  placeholder="Enter your Phone number (Optional)" name="phone" placeholder="Optional">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address"  placeholder="Enter your Address (Optional)" name="address" placeholder="Optional"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Register</button>
+        </form>
+<div class="alert1">
+          <h4>By signing up, you agree to our <a href="#"><span>Terms</span></a> , <a href="#"><span>Privacy Policy</span></a> and <a href="#"><span>Cookies Policy .</span></a></h4>
+        </div>
+        <div class="form-text">
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 CityCare - Online Civic Issue Reporting System</p>
+        </div>
+    </footer>
+<!-- Chatbot Widget -->
+    <div class="chatbot-button" id="chatbotButton">
+        <span>💬</span>
+    </div>
+
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>🤖 CityCare Assistant</h3>
+            <button class="chatbot-close" id="chatbotClose">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">
+                    Hi! I'm CityCare Assistant. How can I help you today?
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="chatbotSend">Send</button>
+        </div>
+    </div>
+
+    <script src="js/chatbot.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>
